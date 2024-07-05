@@ -1,5 +1,6 @@
 module aptosz3::vectores {
     use std::debug::print;
+    use std::string::utf8;
     use std::vector::{empty, length, borrow, borrow_mut, push_back}; // Solo para crear un vector no es necesario importar la libreria.
     // Pero las operaciones de los vectores (como push, pop_back) si necesitan que la importes.
 
@@ -30,8 +31,24 @@ module aptosz3::vectores {
 
         // Recuerda que puedes obtener informacion sobre las demos operaciones en:
         // https://github.com/aptos-labs/aptos-core/blob/main/aptos-move/framework/move-stdlib/doc/vector.md
-    }
 
+        print(&utf8(b"** RETO **"));
+
+        let v4: vector<vector<u64>> = vector[
+            vector[22, 33, 44],
+            vector[55, 66, 77],
+            vector[99, 88, 11]
+        ];
+
+        for (m in 0..3) {
+            let elemento = *borrow(&v4, m);
+            for (i in 0..3) {
+                let elemento1 = *borrow(&elemento, i);
+                print(&elemento1);
+            }
+        }
+
+    }
     #[test]
     fun prueba() {
         practica();

@@ -2,6 +2,8 @@ module aptosz3::condicionales {
     use std::debug::print;
     use std::string::utf8;
 
+    // Crea una constante de error con el valor que desees para indicar que el usuario es menor de edad.
+    const EDAD_MINIMA_ERROR: u64 = 1;
     const ESinAcceso: u64 = 1; // Usualmente las constantes para indicar un error inician con E mayuscula, seguido de la razon del error.
     const NO_HAY_ACCESO: u64 = 2; // Aunque no es necesario, solo se descriptivo en tus errores.
 
@@ -41,6 +43,22 @@ module aptosz3::condicionales {
         // Codigos de error
         assert!(acceso_usuario, ESinAcceso); // Es buena practica especificar la razon de un abort/assert.
         assert!(acceso_usuario, NO_HAY_ACCESO);
+
+        print(&utf8(b"** RETO **"));
+
+        // Crea una variable que represente una edad.
+        let edad = 19;
+
+        // Evalua esta variable en un bloque condicional usando `if` y `else`.
+        if (edad >= 18) {
+            print(&utf8(b"Puede acceder a los contenidos de tu programa"));
+        } else {
+            abort(EDAD_MINIMA_ERROR)
+        };
+
+        // Haz esta misma evaluacion usando `assert`.
+        assert!(edad >= 18, EDAD_MINIMA_ERROR);
+
     }
 
     #[test]

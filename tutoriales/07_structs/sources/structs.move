@@ -17,6 +17,31 @@ module aptosz3::cadenas {
         edicion: Option<u16>, // Que es esto?
     } // Nota que no cerramos con ;
 
+    // Crea un `struct` de una Persona con los campos que gustes. Al menos 3. 
+    struct Persona has drop {
+        nombre: String,
+        apellido: String,
+        edad: u16,
+    }
+
+    // Crea un `struct` de una Clase (una clase de una escuela) con los campos que gustes.
+    // Debe incluir el `struct` Persona en alguno de los campos. Por ejemplo en un campo llamado maestro
+    struct Clase has drop {
+        materia: String,
+        profesor: Persona,
+        activa: bool
+    }
+
+    // Crea un `struct` de una Escuela con los campos que gustes.
+    // Debe incluir un `vector` de Clases.
+    // Usa esos `struct` de manera que tengas una Escuela con un `vector` de Clases, el cual incluya al menos 2 clases de 2 diferentes maestros.
+    struct Escuela has drop {
+    nombre: String,
+    tipo: String,
+        clases: vector<Clase>,
+        fundacion: u16,
+    }
+
     fun practica() {
         
         let autor = Autor { nombre: utf8(b"Paulo Cohelo") };
@@ -95,6 +120,42 @@ module aptosz3::cadenas {
 
         // Recuerda que puedes obtener informacion sobre las demos operaciones en:
         // https://move-language.github.io/move/structs-and-resources.html
+
+        print(&utf8(b"** RETO **"));
+
+        //* Imprime la variable que crees de la Escuela en consola usando `debug_string`. Debera de imprimir todas los campos.
+        let profesor1 = Persona {
+            nombre: utf8(b"Jorge"),
+            apellido: utf8(b"Ortega"),
+            edad: 46u16
+        };
+
+        let profesor2 = Persona {
+            nombre: utf8(b"Dulce"),
+            apellido: utf8(b"Martinez"),
+            edad: 36u16
+        };
+
+        let clase1 = Clase {
+            materia: utf8(b"Literatura"),
+            profesor: profesor1,
+            activa: false
+        };
+
+        let clase2 = Clase {
+            materia: utf8(b"Historia"),
+            profesor: profesor2,
+            activa: true
+        };
+
+        let escuela = Escuela {
+            nombre: utf8(b"Escuela los milagros"),
+            tipo: utf8(b"Primaria"),
+            clases: vector[clase1, clase2],
+            fundacion: 1910u16
+        };
+
+        print(&debug_string(&escuela));
     }
 
     #[test]

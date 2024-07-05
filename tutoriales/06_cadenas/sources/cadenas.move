@@ -52,6 +52,25 @@ module aptosz3::cadenas {
         // Recuerda que puedes obtener informacion sobre las demos operaciones en:
         // https://github.com/aptos-labs/aptos-core/blob/main/aptos-move/framework/move-stdlib/doc/string.md
         // https://github.com/aptos-labs/aptos-core/blob/main/aptos-move/framework/aptos-stdlib/doc/string_utils.md
+
+        print(&utf8(b"** RETO **"));
+
+        let rima1 = b"\tTe vi un punto y, flotando ante mis ojos,\n\tla imagen de tus ojos se quedo,\n\tcomo la mancha oscura orlada en fuego\n\tque flota y ciega si se mira al sol.\n";
+
+        let frase1 = utf8(b"\tTe vi un punto y, flotando ante mis ojos,\n");
+        let frase2 = utf8(b"\tla imagen de tus ojos se quedo,\n");
+        let frase3 = utf8(b"\tcomo la mancha oscura orlada en fuego\n");
+        let frase4 = utf8(b"\tque flota y ciega si se mira al sol.        \n");
+        let rima2 = utf8(b"");
+        append(&mut rima2, frase1);
+        append(&mut rima2, frase2);
+        append(&mut rima2, frase3);
+        append(&mut rima2, frase4);
+        print(&utf8(b"Rima con una sola variable."));
+        print(&utf8(rima1));
+        print(&utf8(b"\nRima con varias variables."));
+        print(&rima2);
+        print(&utf8(b"\nDepende del tamano de la frase, es mejor una sola variable."));
     }
 
     #[test]
