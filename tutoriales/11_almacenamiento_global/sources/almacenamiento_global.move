@@ -3,15 +3,19 @@
 // El modulo es simplemente un contador. Almacenaremos un numero entero y tendremos una funcion para incrementarlo.
 module cuenta::almacenamiento_global {
     use std::signer; // Global Storage trabaja sobre el signer y address como vimos anteriormente.
+    use std::string::String;
 
-    struct Contador has key { valor: u64 } // Creamos un tipo personalizado llamado Contador para almacenar un valor dentro de nuestro contador.
+    struct Contador has key {
+        valor: u64,
+        cadena: String,
+        boleano: bool,
+        tipo: u16
+    } // Creamos un tipo personalizado llamado Contador para almacenar un valor dentro de nuestro contador.
     // Dado a que va a ser utilizado para operaciones con el global storage es necesario que tenga la habilidad key.
 
     // Publica un recurso `Contador` con valor `valor` en la cuenta proporcionada.
-    public entry fun publicar(cuenta: &signer, valor: u64) { // La funcion recibe 2 parametros, pero en realidad al ejecutarla, solo enviaremos 1.
-    // El signer es recibido automaticamente.
-
-        let recurso = Contador { valor }; // Vamos a crear un recurso. No es mas que un struct.
+    public entry fun publicar(cuenta: &signer, valor: u64, cadena: String, boleano: bool, tipo: u16) {
+        let recurso = Contador { valor, cadena, boleano, tipo }; // Vamos a crear un recurso. No es mas que un struct.
         // Este recurso puede ser almacenado dentro de la blockchain utilizando el global storage.
 
         // Para almacenarlo en el global storage usamos move_to. Dato curioso: Esta es la razon por la que Move se llama de esta manera.
@@ -66,10 +70,26 @@ module cuenta::almacenamiento_global {
         let contador = move_from<Contador>(signer::address_of(cuenta)); // Como usamos signer, hay que convertirlo en address.
         // Ahora, ya adquirimos el recurso, ya esta fuera del global storage y lo tenemos almacenado en la variable contador
         // Como podemos deshacernos de el? No podemos simplemente ignorarlo porque no tiene drop...
-        let Contador { valor: _ } = contador; // Recuerda la desestructuracion de structs.
+        let Contador { valor: _, cadena: _, boleano: _, tipo: _ } = contador; // Recuerda la desestructuracion de structs.
         // y podemos parar, dado a que u64 tiene drop y lo podemos ignorar.
     }
 
     // Y donde estan los print?
     // Ahora entiendes porque Move se llama Move?
+    
+        // Funciones para modificar las nuevas variable por separado
+    public entry fun modificar_cadena(cuenta: &signer, nueva_cadena: String) acquires Contador {
+        let referencia_contador = &mut borrow_global_mut<Contador>(signer::address_of(cuenta)).cadena;
+        *referencia_contador = nueva_cadena;
+    }
+
+    public entry fun modificar_boleano(cuenta: &signer, nuevo_valor: bool) acquires Contador {
+        let referencia_contador = &mut borrow_global_mut<Contador>(signer::address_of(cuenta)).boleano;
+        *referencia_contador = nuevo_valor;
+    }
+
+    public entry fun modificar_tipo(cuenta: &signer, nuevo_tipo: u16) acquires Contador {
+        let referencia_contador = &mut borrow_global_mut<Contador>(signer::address_of(cuenta)).tipo;
+        *referencia_contador = nuevo_tipo;
+    }
 }

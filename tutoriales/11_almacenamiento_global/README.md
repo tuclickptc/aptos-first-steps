@@ -126,6 +126,7 @@ Todos estos cambios son para poder trabajar con la cuenta `default`. En el `Move
 Vamos a publicar este paquete, corre este comando:
 
 ```sh
+aptos move publish --named-addresses cuenta=default
 Compiling, may take a little while to download git dependencies...
 UPDATING GIT DEPENDENCY https://github.com/aptos-labs/aptos-core.git
 UPDATING GIT DEPENDENCY https://github.com/aptos-labs/aptos-core.git
